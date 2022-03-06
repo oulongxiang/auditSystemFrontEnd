@@ -17,53 +17,53 @@ import "nprogress/nprogress.css";
 
 
 axios.defaults.timeout = 100000;
-//返回其他状态吗
-axios.defaults.validateStatus = function (status) {
+// 返回其他状态吗
+axios.defaults.validateStatus = function(status) {
   return status >= 200 && status <= 500; // 默认的
 };
-//跨域请求，允许保存cookie
+// 跨域请求，允许保存cookie
 axios.defaults.withCredentials = true;
 // NProgress Configuration
 NProgress.configure({
   showSpinner: false
 });
-//HTTPrequest拦截
+// HTTPrequest拦截
 axios.interceptors.request.use(config => {
-  NProgress.start() // start progress bar
+  NProgress.start(); // start progress bar
   const meta = (config.meta || {});
   const isToken = meta.isToken === false;
   if (getToken() && !isToken) {
-    config.headers[website.Authorization] = getToken() // 让每个请求携带token--['Authorization']为自定义key 请根据实际情况自行修改
+    config.headers[website.Authorization] = getToken(); // 让每个请求携带token--['Authorization']为自定义key 请根据实际情况自行修改
   }
-  //headers中配置serialize为true开启序列化
-  if (config.method === 'post' && meta.isSerialize === true) {
+  // headers中配置serialize为true开启序列化
+  if (config.method === "post" && meta.isSerialize === true) {
     config.data = serialize(config.data);
   }
-  return config
+  return config;
 }, error => {
-  return Promise.reject(error)
+  return Promise.reject(error);
 });
-//HTTPresponse拦截
+// HTTPresponse拦截
 axios.interceptors.response.use(res => {
   NProgress.done();
   const status = Number(res.status);
   // 正常请求
   if (status === 200) {
-    let code
-    let isDownloadFile= res.data instanceof ArrayBuffer
-    if(isDownloadFile){
-      const contentType=res.headers['content-type']
-      if(contentType==='application/vnd.ms-excel;charset=UTF-8' || contentType==='application/octet-stream;charset=UTF-8'){
-        return {data:res.data,fileName:decodeURI(res.headers['filename'])};
+    let code;
+    const isDownloadFile = res.data instanceof ArrayBuffer;
+    if (isDownloadFile) {
+      const contentType = res.headers["content-type"];
+      if (contentType === "application/vnd.ms-excel;charset=UTF-8" || contentType === "application/octet-stream;charset=UTF-8") {
+        return { data: res.data, fileName: decodeURI(res.headers["filename"]) };
       }
-      //如果是文件下载时，返回的数据是json格式，则说明服务端报错
-      if(contentType==='application/json;charset=UTF-8' || contentType==='application/json'){
-        let enc = new TextDecoder('utf-8')
-        let errorResult = JSON.parse(enc.decode(new Uint8Array(res.data)))
-        code=errorResult.code
-        res.data.message=errorResult.message
+      // 如果是文件下载时，返回的数据是json格式，则说明服务端报错
+      if (contentType === "application/json;charset=UTF-8" || contentType === "application/json") {
+        const enc = new TextDecoder("utf-8");
+        const errorResult = JSON.parse(enc.decode(new Uint8Array(res.data)));
+        code = errorResult.code;
+        res.data.message = errorResult.message;
       }
-    }else{
+    } else {
       code = res.data.code;
     }
     switch (code) {
@@ -71,12 +71,12 @@ axios.interceptors.response.use(res => {
         return res.data;
       case "401": // 账号在其他地方登录 或者 长时间未进行操作
         fail(res.data.message);
-        store.dispatch('FedLogOut').then(() => router.push({path: '/login'}));
+        store.dispatch("FedLogOut").then(() => router.push({ path: "/login" }));
         break;
       case "403": // 无权
         fail(res.data.message);
         setTimeout(() => {
-          router.push({path: '/403'});
+          router.push({ path: "/403" });
         }, 1000);
         break;
       case "404":
@@ -84,7 +84,7 @@ axios.interceptors.response.use(res => {
         break;
       case "405":
         fail("系统正在维护中");
-        store.dispatch('FedLogOut').then(() => router.push({path: '/405'}));
+        store.dispatch("FedLogOut").then(() => router.push({ path: "/405" }));
         break;
       case "500":
       case "8005":
@@ -114,8 +114,8 @@ axios.interceptors.response.use(res => {
 const fail = message => {
   Message({
     message: message,
-    type: 'error'
-  })
-}
+    type: "error"
+  });
+};
 
 export default axios;

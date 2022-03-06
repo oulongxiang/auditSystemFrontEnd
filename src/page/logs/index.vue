@@ -1,35 +1,41 @@
 <template>
-  <avue-crud :data="logsList"
-             :option="option">
-    <template slot="menuLeft">
-      <el-button type="primary"
-                 size="small"
-                 icon="el-icon-upload"
-                 @click="send">上传服务器</el-button>
-      <el-button type="danger"
-                 size="small"
-                 icon="el-icon-delete"
-                 @click="clear">清空本地日志</el-button>
-    </template>
-    <template slot-scope="scope"
-              slot="type">
-      <el-tag type="danger"
-              size="small">{{scope.label}}</el-tag>
-    </template>
-    <template slot-scope="props"
-              slot="expand">
-      <pre class="code">
-        {{props.row.stack}}
-      </pre>
-    </template>
-  </avue-crud>
+    <avue-crud
+        :data="logsList"
+        :option="option">
+        <template slot="menuLeft">
+            <el-button
+                type="primary"
+                size="small"
+                icon="el-icon-upload"
+                @click="send">上传服务器</el-button>
+            <el-button
+                type="danger"
+                size="small"
+                icon="el-icon-delete"
+                @click="clear">清空本地日志</el-button>
+        </template>
+        <template
+            slot-scope="scope"
+            slot="type">
+            <el-tag
+                type="danger"
+                size="small">{{ scope.label }}</el-tag>
+        </template>
+        <template
+            slot-scope="props"
+            slot="expand">
+            <pre class="code">
+        {{ props.row.stack }}
+            </pre>
+        </template>
+    </avue-crud>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 
 export default {
-  name: "errLogs",
+  name: "ErrLogs",
   data() {
     return {
       option: {

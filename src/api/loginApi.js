@@ -1,7 +1,7 @@
 import request from "@/router/axios";
 import { baseUrl } from "@/config/env";
 
-//登录相关的Api都在这
+// 登录相关的Api都在这
 
 /**
  * 账号密码登录
@@ -9,13 +9,13 @@ import { baseUrl } from "@/config/env";
  * @param loginPassword 登录密码
  */
 export const loginByUsername = (accountNumber, loginPassword) => request({
-    url: baseUrl + '/user/login',
-    method: 'post',
-    data: {
-        accountNumber:accountNumber,
-        loginPassword:loginPassword
-    }
-})
+  url: baseUrl + "/user/login",
+  method: "post",
+  data: {
+    accountNumber: accountNumber,
+    loginPassword: loginPassword
+  }
+});
 
 /**
  * 单点登录
@@ -23,18 +23,18 @@ export const loginByUsername = (accountNumber, loginPassword) => request({
  * @param service 服务地址
  */
 export const loginBySSo = (ticket, service) => request({
-    url: baseUrl + '/user/loginToSso',
-    method: 'post',
-    data: {
-        ticket:ticket,
-        service:service
-    }
-})
+  url: baseUrl + "/user/loginToSso",
+  method: "post",
+  data: {
+    ticket: ticket,
+    service: service
+  }
+});
 
 /**
  * 登出
  */
 export const logout = () => request({
-    url: baseUrl + '/user/logout',
-    method: 'post'
+  url: baseUrl + "/user/logout",
+  method: "post"
 });

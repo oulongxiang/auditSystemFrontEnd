@@ -8,30 +8,29 @@
 -->
 <template>
 
-  <div class="container"
-       @keyup.enter.native="handleLogin">
-    <top-color v-show="false"></top-color>
-    <div class="left">
-      <img class="divp" src="/img/bg/loginbg.jpg" alt="">
-    </div>
-    <div class="right">
-          <div >
+    <div
+        class="container"
+        @keyup.enter.native="handleLogin">
+        <top-color v-show="false"/>
+        <div class="left">
+            <img class="divp" src="/img/bg/loginbg.jpg" alt="">
+        </div>
+        <div class="right">
+            <div />
 
-          </div>
-
-          <div class="loginmodel">
-            <img class="logoclass" src="/img/bg/tullogo2.jpg" alt="">
-            <h4 class="login-title">
-              集团{{website.title}}
-            </h4>
-            <div class="bottonclass"><p class="bottontitle">客观 · 公正 · 保密 · 胜任</p></div>
-            <div class="loginclass">
-              <userLogin></userLogin>
+            <div class="loginmodel">
+                <img class="logoclass" src="/img/bg/tullogo2.jpg" alt="">
+                <h4 class="login-title">
+                    集团{{ website.title }}
+                </h4>
+                <div class="bottonclass"><p class="bottontitle">客观 · 公正 · 保密 · 胜任</p></div>
+                <div class="loginclass">
+                    <userLogin/>
+                </div>
             </div>
-          </div>
 
+        </div>
     </div>
-  </div>
 </template>
 <script>
 import userLogin from "./userlogin";
@@ -44,25 +43,25 @@ export default {
     userLogin,
     topColor
   },
-  data () {
+  data() {
     return {
       time: ""
     };
   },
-  created () {
+  created() {
     document.title = "审计系统-登录";
     this.getTime();
     setInterval(() => {
       this.getTime();
     }, 1000);
   },
-  mounted () { },
+  mounted() { },
   computed: {
     ...mapGetters(["website"])
   },
   props: [],
   methods: {
-    getTime () {
+    getTime() {
       this.time = dateFormat(new Date());
     }
   }

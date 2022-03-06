@@ -1,17 +1,18 @@
 <template>
-  <el-autocomplete class="top-search"
-                   popper-class="my-autocomplete"
-                   v-model="value"
-                   :fetch-suggestions="querySearch"
-                   placeholder="搜索"
-                   @select="handleSelect">
+    <el-autocomplete
+        class="top-search"
+        popper-class="my-autocomplete"
+        v-model="value"
+        :fetch-suggestions="querySearch"
+        placeholder="搜索"
+        @select="handleSelect">
 
-    <template slot-scope="{ item }">
-      <i :class="[item[iconKey],'icon']"></i>
-      <div class="name">{{ item[labelKey] }}</div>
-      <div class="addr">{{ item[pathKey] }}</div>
-    </template>
-  </el-autocomplete>
+        <template slot-scope="{ item }">
+            <i :class="[item[iconKey],'icon']"/>
+            <div class="name">{{ item[labelKey] }}</div>
+            <div class="addr">{{ item[pathKey] }}</div>
+        </template>
+    </el-autocomplete>
 </template>
 
 <script>
@@ -19,33 +20,33 @@ import config from "../sidebar/config.js";
 import { mapGetters } from "vuex";
 
 export default {
-  data () {
+  data() {
     return {
       config: config,
       value: "",
       menuList: []
     };
   },
-  created () {
+  created() {
     this.getMenuList();
   },
 
   watch: {
-    menu () {
+    menu() {
       this.getMenuList();
     }
   },
   computed: {
-    labelKey () {
+    labelKey() {
       return this.website.menu.props.label || this.config.propsDefault.label;
     },
-    pathKey () {
+    pathKey() {
       return this.website.menu.props.path || this.config.propsDefault.path;
     },
-    iconKey () {
+    iconKey() {
       return this.website.menu.props.icon || this.config.propsDefault.icon;
     },
-    childrenKey () {
+    childrenKey() {
       return (
         this.website.menu.props.children || this.config.propsDefault.children
       );
@@ -53,7 +54,7 @@ export default {
     ...mapGetters(["menu", "website"])
   },
   methods: {
-    getMenuList () {
+    getMenuList() {
       const findMenu = list => {
         for (let i = 0; i < list.length; i++) {
           const ele = Object.assign({}, list[i]);
@@ -67,7 +68,7 @@ export default {
       this.menuList = [];
       findMenu(this.menu);
     },
-    querySearch (queryString, cb) {
+    querySearch(queryString, cb) {
       var restaurants = this.menuList;
       var results = queryString
         ? restaurants.filter(this.createFilter(queryString))
@@ -75,7 +76,7 @@ export default {
       // 调用 callback 返回建议列表的数据
       cb(results);
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return restaurant => {
         return (
           restaurant.label.toLowerCase().indexOf(queryString.toLowerCase()) ===
@@ -83,7 +84,7 @@ export default {
         );
       };
     },
-    handleSelect (item) {
+    handleSelect(item) {
       this.value = "";
       this.$router.push({
         path: this.$router.$avueRouter.getPath({

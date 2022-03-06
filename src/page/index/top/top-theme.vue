@@ -1,27 +1,31 @@
 <template>
-  <div>
-    <el-dialog title="选择"
-               :visible.sync="box"
-               width="50%">
-      <el-radio-group v-model="text"
-                      class="list">
-        <el-row :span="24">
-          <el-col v-for="(item,index) in list"
-                  :key="index"
-                  :md="4"
-                  :xs="12"
-                  :sm="4">
-            <el-radio :label="item.value">{{item.name}}</el-radio>
-          </el-col>
-        </el-row>
-      </el-radio-group>
-    </el-dialog>
+    <div>
+        <el-dialog
+            title="选择"
+            :visible.sync="box"
+            width="50%">
+            <el-radio-group
+                v-model="text"
+                class="list">
+                <el-row :span="24">
+                    <el-col
+                        v-for="(item,index) in list"
+                        :key="index"
+                        :md="4"
+                        :xs="12"
+                        :sm="4">
+                        <el-radio :label="item.value">{{ item.name }}</el-radio>
+                    </el-col>
+                </el-row>
+            </el-radio-group>
+        </el-dialog>
 
-    <span>
-      <i class="icon-zhuti"
-         @click="open"></i>
-    </span>
-  </div>
+        <span>
+            <i
+                class="icon-zhuti"
+                @click="open"/>
+        </span>
+    </div>
 </template>
 
 <script>
@@ -29,7 +33,7 @@ import { setTheme } from "@/util/util";
 import { mapGetters } from "vuex";
 
 export default {
-  data () {
+  data() {
     return {
       box: false,
       text: "",
@@ -85,7 +89,7 @@ export default {
     };
   },
   watch: {
-    text: function (val) {
+    text: function(val) {
       this.$store.commit("SET_THEME_NAME", val);
       setTheme(val);
     }
@@ -93,14 +97,14 @@ export default {
   computed: {
     ...mapGetters(["themeName"])
   },
-  mounted () {
+  mounted() {
     this.text = this.themeName;
     if (!this.text) {
       this.text = "";
     }
   },
   methods: {
-    open () {
+    open() {
       this.box = true;
     }
   }

@@ -1,35 +1,39 @@
 <template>
-  <div class="avue-searchs"
-       @click.self="handleEsc">
-    <div class="avue-searchs__title">菜单搜索</div>
-    <div class="avue-searchs__content">
-      <div class="avue-searchs__form">
-        <el-input placeholder="搜索"
-                  v-model="value"
-                  @keydown.esc.native="handleEsc">
-          <el-button slot="append"
-                     icon="el-icon-search"></el-button>
-        </el-input>
-        <p>
-          <el-tag>你可以使用快捷键esc 关闭</el-tag>
-        </p>
-      </div>
-      <div class="avue-searchs__list">
-        <el-scrollbar class="avue-searchs__scrollbar">
-          <div class="avue-searchs__item"
-               v-for="(item,index) in menus"
-               :key="index"
-               @click="handleSelect(item)">
-            <i :class="[item[iconKey],'avue-searchs__item-icon']"></i>
-            <span class="avue-searchs__item-title">{{item[labelKey]}}</span>
-            <div class="avue-searchs__item-path">
-              {{item[pathKey]}}
+    <div
+        class="avue-searchs"
+        @click.self="handleEsc">
+        <div class="avue-searchs__title">菜单搜索</div>
+        <div class="avue-searchs__content">
+            <div class="avue-searchs__form">
+                <el-input
+                    placeholder="搜索"
+                    v-model="value"
+                    @keydown.esc.native="handleEsc">
+                    <el-button
+                        slot="append"
+                        icon="el-icon-search"/>
+                </el-input>
+                <p>
+                    <el-tag>你可以使用快捷键esc 关闭</el-tag>
+                </p>
             </div>
-          </div>
-        </el-scrollbar>
-      </div>
+            <div class="avue-searchs__list">
+                <el-scrollbar class="avue-searchs__scrollbar">
+                    <div
+                        class="avue-searchs__item"
+                        v-for="(item,index) in menus"
+                        :key="index"
+                        @click="handleSelect(item)">
+                        <i :class="[item[iconKey],'avue-searchs__item-icon']"/>
+                        <span class="avue-searchs__item-title">{{ item[labelKey] }}</span>
+                        <div class="avue-searchs__item-path">
+                            {{ item[pathKey] }}
+                        </div>
+                    </div>
+                </el-scrollbar>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -37,36 +41,36 @@ import config from "./sidebar/config.js";
 import { mapGetters } from "vuex";
 
 export default {
-  data () {
+  data() {
     return {
       config: config,
       value: "",
       menus: [],
       menuList: []
-    }
+    };
   },
-  created () {
+  created() {
     this.getMenuList();
   },
   watch: {
-    value () {
+    value() {
       this.querySearch();
     },
-    menu () {
+    menu() {
       this.getMenuList();
     }
   },
   computed: {
-    labelKey () {
+    labelKey() {
       return this.website.menu.props.label || this.config.propsDefault.label;
     },
-    pathKey () {
+    pathKey() {
       return this.website.menu.props.path || this.config.propsDefault.path;
     },
-    iconKey () {
+    iconKey() {
       return this.website.menu.props.icon || this.config.propsDefault.icon;
     },
-    childrenKey () {
+    childrenKey() {
       return (
         this.website.menu.props.children || this.config.propsDefault.children
       );
@@ -74,10 +78,10 @@ export default {
     ...mapGetters(["menu", "website"])
   },
   methods: {
-    handleEsc () {
+    handleEsc() {
       this.$parent.isSearch = false;
     },
-    getMenuList () {
+    getMenuList() {
       const findMenu = list => {
         for (let i = 0; i < list.length; i++) {
           const ele = Object.assign({}, list[i]);
@@ -92,14 +96,14 @@ export default {
       findMenu(this.menu);
       this.menus = this.menuList;
     },
-    querySearch () {
+    querySearch() {
       var restaurants = this.menuList;
-      var queryString = this.value
+      var queryString = this.value;
       this.menus = queryString
         ? this.menuList.filter(this.createFilter(queryString))
         : restaurants;
     },
-    createFilter (queryString) {
+    createFilter(queryString) {
       return restaurant => {
         return (
           restaurant.label.toLowerCase().indexOf(queryString.toLowerCase()) ===
@@ -107,7 +111,7 @@ export default {
         );
       };
     },
-    handleSelect (item) {
+    handleSelect(item) {
       this.handleEsc();
       this.value = "";
       this.$router.push({
@@ -119,7 +123,7 @@ export default {
       });
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

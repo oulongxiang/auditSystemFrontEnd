@@ -1,70 +1,81 @@
 <template>
-  <el-form class="login-form"
-           status-icon
-           :rules="loginRules"
-           ref="loginForm"
-           :model="loginForm"
-           label-width="0">
-    <el-form-item prop="username">
-      <el-input size="small"
+    <el-form
+        class="login-form"
+        status-icon
+        :rules="loginRules"
+        ref="loginForm"
+        :model="loginForm"
+        label-width="0">
+        <el-form-item prop="username">
+            <el-input
+                size="small"
                 @keyup.enter.native="handleLogin"
                 v-model="loginForm.username"
                 auto-complete="off"
                 placeholder="请输入账号">
-        <i slot="prefix"
-           class="icon-yonghu"></i>
-      </el-input>
-    </el-form-item>
-    <el-form-item prop="password">
-      <el-input size="small"
+                <i
+                    slot="prefix"
+                    class="icon-yonghu"/>
+            </el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+            <el-input
+                size="small"
                 @keyup.enter.native="handleLogin"
                 :type="passwordType"
                 v-model="loginForm.password"
                 auto-complete="off"
                 placeholder="请输入密码">
-        <i class="el-icon-view el-input__icon"
-           slot="suffix"
-           @click="showPassword"></i>
-        <i slot="prefix"
-           class="icon-mima"></i>
-      </el-input>
-    </el-form-item>
-    <el-form-item prop="code">
-      <el-row :span="24">
-        <el-col :span="16">
-          <el-input size="small"
-                    @keyup.enter.native="handleLogin"
-                    :maxlength="code.len"
-                    v-model="loginForm.code"
-                    auto-complete="off"
-                    placeholder="请输入验证码">
-            <i slot="prefix"
-               class="icon-yanzhengma"></i>
-          </el-input>
-        </el-col>
-        <el-col :span="8">
-          <div class="login-code">
-            <span class="login-code-img"
-                  @click="refreshCode"
-                  v-if="code.type === 'text'">{{code.value}}</span>
-            <img :src="code.src"
-                 class="login-code-img"
-                 @click="refreshCode"
-                 v-else />
-          </div>
-        </el-col>
-      </el-row>
+                <i
+                    class="el-icon-view el-input__icon"
+                    slot="suffix"
+                    @click="showPassword"/>
+                <i
+                    slot="prefix"
+                    class="icon-mima"/>
+            </el-input>
+        </el-form-item>
+        <el-form-item prop="code">
+            <el-row :span="24">
+                <el-col :span="16">
+                    <el-input
+                        size="small"
+                        @keyup.enter.native="handleLogin"
+                        :maxlength="code.len"
+                        v-model="loginForm.code"
+                        auto-complete="off"
+                        placeholder="请输入验证码">
+                        <i
+                            slot="prefix"
+                            class="icon-yanzhengma"/>
+                    </el-input>
+                </el-col>
+                <el-col :span="8">
+                    <div class="login-code">
+                        <span
+                            class="login-code-img"
+                            @click="refreshCode"
+                            v-if="code.type === 'text'">{{ code.value }}</span>
+                        <img
+                            :src="code.src"
+                            class="login-code-img"
+                            @click="refreshCode"
+                            v-else >
+                    </div>
+                </el-col>
+            </el-row>
 
-    </el-form-item>
+        </el-form-item>
 
-    <el-form-item>
-      <el-button type="primary"
-                 size="small"
-                 :loading="loading"
-                 @click.native.prevent="handleLogin"
-                 class="login-submit">{{ loginButtonText }}</el-button>
-    </el-form-item>
-  </el-form>
+        <el-form-item>
+            <el-button
+                type="primary"
+                size="small"
+                :loading="loading"
+                @click.native.prevent="handleLogin"
+                class="login-submit">{{ loginButtonText }}</el-button>
+        </el-form-item>
+    </el-form>
 </template>
 
 <script>
@@ -72,7 +83,7 @@ import { randomLenNum } from "@/util/util";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "userlogin",
+  name: "Userlogin",
   data() {
     const validateCode = (rule, value, callback) => {
       if (this.code.value !== value) {
@@ -84,8 +95,8 @@ export default {
       }
     };
     return {
-      loading:false,
-      loginButtonText:"登录",
+      loading: false,
+      loginButtonText: "登录",
       loginForm: {
         username: "",
         password: "",
@@ -140,18 +151,18 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loginButtonText="登录中"
-          this.loading=true
+          this.loginButtonText = "登录中";
+          this.loading = true;
           this.$store.dispatch("LoginByUsername", this.loginForm).then(() => {
-            if(this.$utils.isMobile()){
-              this.$router.push({ path: 'phonePageIndex'});
-            }else{
+            if (this.$utils.isMobile()) {
+              this.$router.push({ path: "phonePageIndex" });
+            } else {
               this.$router.push({ path: this.tagWel.value });
             }
-          }).catch(()=>{
-            this.loginButtonText="登录"
-            this.loading=false
-          })
+          }).catch(() => {
+            this.loginButtonText = "登录";
+            this.loading = false;
+          });
         }
       });
     },

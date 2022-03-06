@@ -1,114 +1,122 @@
 <template>
-  <div class="setting">
-    <el-button class="setting"
-               type="primary"
-               :class="{'setting--show':show}"
-               @click="show=!show"
-               :icon="show?'el-icon-close':'el-icon-s-tools'"></el-button>
-    <el-drawer append-to-body
-               class="setting-panel"
-               :with-header="false"
-               :visible.sync="show"
-               size="320px">
-      <h5>导航模式</h5>
-      <div class="setting-checkbox">
-        <el-tooltip class="item"
+    <div class="setting">
+        <el-button
+            class="setting"
+            type="primary"
+            :class="{'setting--show':show}"
+            @click="show=!show"
+            :icon="show?'el-icon-close':'el-icon-s-tools'"/>
+        <el-drawer
+            append-to-body
+            class="setting-panel"
+            :with-header="false"
+            :visible.sync="show"
+            size="320px">
+            <h5>导航模式</h5>
+            <div class="setting-checkbox">
+                <el-tooltip
+                    class="item"
                     effect="dark"
                     content="侧边菜单布局"
                     placement="top">
-          <div @click="setting.sidebar='vertical'"
-               class="setting-checkbox-item setting-checkbox-item--side">
-            <i v-if="!isHorizontal"
-               class="el-icon-check setting-checkbox--check">
-            </i>
-          </div>
-        </el-tooltip>
-        <el-tooltip class="item"
+                    <div
+                        @click="setting.sidebar='vertical'"
+                        class="setting-checkbox-item setting-checkbox-item--side">
+                        <i
+                            v-if="!isHorizontal"
+                            class="el-icon-check setting-checkbox--check"/>
+                    </div>
+                </el-tooltip>
+                <el-tooltip
+                    class="item"
                     effect="dark"
                     content="顶部菜单布局"
                     placement="top">
-          <div @click="setting.sidebar='horizontal'"
-               class="setting-checkbox-item setting-checkbox-item--top">
-            <i v-if="isHorizontal"
-               class="el-icon-check setting-checkbox--check">
-            </i>
-          </div>
-        </el-tooltip>
-      </div>
-      <h5>页面布局</h5>
-      <div class="setting-checkbox">
-        <div class="setting-item"
-             v-for="(item,index) in list1"
-             :key="index">
-          {{item.label}}:
-          <el-switch v-model="setting[item.value]"
-                     size="small">
-          </el-switch>
-        </div>
-      </div>
-      <h5>功能调试</h5>
-      <div class="setting-checkbox">
-        <div class="setting-item"
-             v-for="(item,index) in list2"
-             :key="index">
-          {{item.label}}:
-          <el-switch v-model="setting[item.value]"
-                     size="small">
-          </el-switch>
-        </div>
-      </div>
-    </el-drawer>
-  </div>
+                    <div
+                        @click="setting.sidebar='horizontal'"
+                        class="setting-checkbox-item setting-checkbox-item--top">
+                        <i
+                            v-if="isHorizontal"
+                            class="el-icon-check setting-checkbox--check"/>
+                    </div>
+                </el-tooltip>
+            </div>
+            <h5>页面布局</h5>
+            <div class="setting-checkbox">
+                <div
+                    class="setting-item"
+                    v-for="(item,index) in list1"
+                    :key="index">
+                    {{ item.label }}:
+                    <el-switch
+                        v-model="setting[item.value]"
+                        size="small"/>
+                </div>
+            </div>
+            <h5>功能调试</h5>
+            <div class="setting-checkbox">
+                <div
+                    class="setting-item"
+                    v-for="(item,index) in list2"
+                    :key="index">
+                    {{ item.label }}:
+                    <el-switch
+                        v-model="setting[item.value]"
+                        size="small"/>
+                </div>
+            </div>
+        </el-drawer>
+    </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 
 export default {
-  data () {
+  data() {
     return {
       show: false,
       list1: [{
-        label: '页面全屏',
-        value: 'onlyPage'
-      },{
-        label: '导航标签',
-        value: 'tag'
+        label: "页面全屏",
+        value: "onlyPage"
       }, {
-        label: '菜单折叠',
-        value: 'collapse'
+        label: "导航标签",
+        value: "tag"
       }, {
-        label: '菜单搜索',
-        value: 'search'
+        label: "菜单折叠",
+        value: "collapse"
       }, {
-        label: '屏幕全屏',
-        value: 'fullscren'
+        label: "菜单搜索",
+        value: "search"
       }, {
-        label: '主题选择',
-        value: 'theme'
+        label: "屏幕全屏",
+        value: "fullscren"
       }, {
-        label: '主题颜色',
-        value: 'color'
+        label: "主题选择",
+        value: "theme"
       }, {
-        label: '顶部菜单',
-        value: 'menu'
+        label: "主题颜色",
+        value: "color"
+      }, {
+        label: "顶部菜单",
+        value: "menu"
       }],
       list2: [{
-        label: '意见反馈',
-        value: 'screenshot'
+        label: "意见反馈",
+        value: "screenshot"
       }, {
-        label: '日志调试',
-        value: 'debug'
+        label: "日志调试",
+        value: "debug"
       }, {
-        label: '屏幕锁定',
-        value: 'lock'
+        label: "屏幕锁定",
+        value: "lock"
       }]
-    }
+    };
   },
   computed: {
-    ...mapGetters(["isHorizontal", 'setting']),
+    ...mapGetters(["isHorizontal", "setting"]),
   }
-}
+};
 </script>
 
 

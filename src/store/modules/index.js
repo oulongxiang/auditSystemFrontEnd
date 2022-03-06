@@ -10,8 +10,8 @@ import tags from "./tags";
 import logs from "./logs";
 
 export default {
-    user,
-    common,
-    logs,
-    tags
-}
+  user,
+  common,
+  logs,
+  tags
+};

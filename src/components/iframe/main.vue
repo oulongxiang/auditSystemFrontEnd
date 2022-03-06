@@ -1,9 +1,10 @@
 <template>
-  <basic-container>
-    <iframe :src="src"
+    <basic-container>
+        <iframe
+            :src="src"
             class="iframe"
-            ref="iframe"></iframe>
-  </basic-container>
+            ref="iframe"/>
+    </basic-container>
 </template>
 
 <script>
@@ -12,31 +13,31 @@ import NProgress from "nprogress"; // progress bar
 import "nprogress/nprogress.css"; // progress bar style
 export default {
   name: "AvueIframe",
-  data () {
+  data() {
     return {
-      urlPath: this.getUrlPath() //iframe src 路径
+      urlPath: this.getUrlPath() // iframe src 路径
     };
   },
-  created () {
+  created() {
     NProgress.configure({ showSpinner: false });
   },
-  mounted () {
+  mounted() {
     this.load();
     this.resize();
   },
   props: ["routerPath"],
   watch: {
-    $route: function () {
+    $route: function() {
       this.load();
     },
-    routerPath: function () {
+    routerPath: function() {
       // 监听routerPath变化，改变src路径
       this.urlPath = this.getUrlPath();
     }
   },
   computed: {
     ...mapGetters(["screen"]),
-    src () {
+    src() {
       return this.$route.query.src
         ? this.$route.query.src.replace("$", "&")
         : this.urlPath;
@@ -44,23 +45,23 @@ export default {
   },
   methods: {
     // 显示等待框
-    show () {
+    show() {
       NProgress.start();
     },
     // 隐藏等待狂
-    hide () {
+    hide() {
       NProgress.done();
     },
     // 加载浏览器窗口变化自适应
-    resize () {
+    resize() {
       window.onresize = () => {
         this.iframeInit();
       };
     },
     // 加载组件
-    load () {
+    load() {
       this.show();
-      //超时3s自动隐藏等待狂，加强用户体验
+      // 超时3s自动隐藏等待狂，加强用户体验
       let time = 3;
       const timeFunc = setInterval(() => {
         time--;
@@ -71,8 +72,8 @@ export default {
       }, 1000);
       this.iframeInit();
     },
-    //iframe窗口初始化
-    iframeInit () {
+    // iframe窗口初始化
+    iframeInit() {
       const iframe = this.$refs.iframe;
       const clientHeight =
         document.documentElement.clientHeight - (screen > 1 ? 200 : 130);
@@ -88,8 +89,8 @@ export default {
         };
       }
     },
-    getUrlPath: function () {
-      //获取 iframe src 路径
+    getUrlPath: function() {
+      // 获取 iframe src 路径
       let url = window.location.href;
       url = url.replace("/myiframe", "");
       return url;

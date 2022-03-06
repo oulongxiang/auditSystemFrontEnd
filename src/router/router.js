@@ -13,15 +13,15 @@ import ViewsRouter from "./views/";
 import AvueRouter from "./avue-router";
 import Store from "../store/";
 
-Vue.use(VueRouter)
-//创建路由
+Vue.use(VueRouter);
+// 创建路由
 
 export const createRouter = () => new VueRouter({
-  mode: 'history',
+  mode: "history",
   routes: [...PageRouter, ...ViewsRouter]
-})
+});
 
-const Router = createRouter()
+const Router = createRouter();
 AvueRouter.install(Vue, {
   router: Router,
   store: Store,
@@ -29,13 +29,13 @@ AvueRouter.install(Vue, {
 });
 Router.$avueRouter.formatRoutes(Store.state.user.menuAll, true);
 Router.addRoutes([...PageRouter, ...ViewsRouter]);
-export function resetRouter () {
-  const newRouter = createRouter()
-  Router.matcher = newRouter.matcher // reset router
+export function resetRouter() {
+  const newRouter = createRouter();
+  Router.matcher = newRouter.matcher; // reset router
   AvueRouter.install(Vue, {
     router: Router,
     store: Store,
     keepAlive: false,
   });
 }
-export default Router
+export default Router;
